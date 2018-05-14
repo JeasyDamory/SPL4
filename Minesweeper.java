@@ -8,7 +8,8 @@ public class Minesweeper {
     static String[][] MinefieldMines = SpielfeldAnlegen(_Zeilen, _Spalten, true);
     static String[][] MinefieldUser = SpielfeldAnlegen(_Zeilen, _Spalten, false);
 
-    static int mines = 0;
+    static int mines = 1;
+    static int versuche = 0;
 
 
 
@@ -25,6 +26,8 @@ public class Minesweeper {
             int eingSpalte = eingeben("Bitte Spalte eingeben: ");
 
             Schleife = SpielfeldPrüfen(eingZeile,eingSpalte);
+
+            Schleife = VersuchePrüfen(versuche, _Zeilen, _Spalten, mines);
 
         }
 
@@ -72,7 +75,7 @@ public class Minesweeper {
 
         }
 
-        System.out.println("______________");
+        System.out.println("_________");
 
     }
 
@@ -100,16 +103,39 @@ public class Minesweeper {
 
             SpielfeldAnzeigen(MinefieldUser, _Zeilen, _Spalten);
 
+            versuche++;
+
             return false;
         } else {
+
+            SpielfeldAnzeigen(MinefieldUser, _Zeilen, _Spalten);
 
             System.out.println("Du hast keine Mine erwischt!");
 
             MinefieldUser[Zeile][Spalte] = "[-]";
 
+            versuche++;
+
             return true;
         }
 
+    }
+
+
+
+    public static boolean VersuchePrüfen(int Versuche, int Zeilen, int Spalten, int Minen) {
+
+        int maxVersuche = (Zeilen*Spalten) - Minen;
+
+        boolean Prüfung = true;
+
+        if (Versuche >= maxVersuche) {
+
+            Prüfung = false;
+
+        }
+
+        return Prüfung;
     }
 
 
