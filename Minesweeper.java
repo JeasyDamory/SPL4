@@ -4,11 +4,16 @@ public class Minesweeper {
 
     static int _Zeilen  = 3;
     static int _Spalten = 3;
+
     static String[][] MinefieldMines = SpielfeldAnlegen(_Zeilen, _Spalten, true);
     static String[][] MinefieldUser = SpielfeldAnlegen(_Zeilen, _Spalten, false);
+
     static int mines = 0;
 
+
+
     public static void main(String[] args) {
+
 
         boolean Schleife = true;
 
@@ -51,6 +56,8 @@ public class Minesweeper {
     }
 
 
+
+
     public static void SpielfeldAnzeigen(String[][] MinefieldUser, int Zeilen, int Spalten) {
 
         for(int z = 0; z < Zeilen; z++) {
@@ -70,6 +77,8 @@ public class Minesweeper {
     }
 
 
+
+
     public static int eingeben(String hinweis) {
 
         String eingabe = JOptionPane.showInputDialog(hinweis);
@@ -79,11 +88,17 @@ public class Minesweeper {
     }
 
 
+
+
     public static boolean SpielfeldPrüfen(int Zeile, int Spalte) {
 
         if (MinefieldMines[Zeile][Spalte] == "[x]") {
 
             System.out.println("Bumm -  du hast eine Mine erwischt!");
+
+            MinefieldUser[Zeile][Spalte] = "[x]";
+
+            SpielfeldAnzeigen(MinefieldUser, _Zeilen, _Spalten);
 
             return false;
         } else {
