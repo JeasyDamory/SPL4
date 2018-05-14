@@ -2,13 +2,13 @@ import javax.swing.*;
 
 public class Minesweeper {
 
-    static int _Zeilen  = 3;
-    static int _Spalten = 3;
+    static int _Zeilen  = 2;
+    static int _Spalten = 2;
 
     static String[][] MinefieldMines = SpielfeldAnlegen(_Zeilen, _Spalten, true);
     static String[][] MinefieldUser = SpielfeldAnlegen(_Zeilen, _Spalten, false);
 
-    static int mines = 1;
+    static int mines = 2;
     static int versuche = 0;
 
 
@@ -25,9 +25,10 @@ public class Minesweeper {
             int eingZeile= eingeben("Bitte Zeile wählen: ");
             int eingSpalte = eingeben("Bitte Spalte eingeben: ");
 
+            Schleife = VersuchePrüfen(versuche, _Zeilen, _Spalten, mines);
+
             Schleife = SpielfeldPrüfen(eingZeile,eingSpalte);
 
-            Schleife = VersuchePrüfen(versuche, _Zeilen, _Spalten, mines);
 
         }
 
@@ -40,22 +41,30 @@ public class Minesweeper {
 
     public static String[][] SpielfeldAnlegen(int Zeilen, int Spalten, boolean Minen) {
 
-        String[][] Minefield = new String[Zeilen][Spalten];
 
         for(int z = 0; z < Zeilen; z++) {
 
             for(int s = 0; s < Spalten; s++) {
 
-                Minefield[z][s] = "[ ]";
+                MinefieldUser[z][s] = "[ ]";
+                MinefieldMines[z][s] = "[ ]";
 
             }
 
         }
 
         if(Minen ==  true) {
-            Minefield[2][0] = "[x]";
+
+            while(mines > 0) {
+                int zeileMine = (int) (Math.random() * Zeilen);
+                int spalteMine = (int) (Math.random() * Spalten);
+
+                MinefieldMines[zeileMine][spalteMine] = "[x]";
+
+                mines--;
+            }
         }
-        return Minefield;
+        return MinefieldMines;
     }
 
 
@@ -97,11 +106,12 @@ public class Minesweeper {
 
         if (MinefieldMines[Zeile][Spalte] == "[x]") {
 
+            SpielfeldAnzeigen(MinefieldUser, _Zeilen, _Spalten);
+
             System.out.println("Bumm -  du hast eine Mine erwischt!");
 
             MinefieldUser[Zeile][Spalte] = "[x]";
 
-            SpielfeldAnzeigen(MinefieldUser, _Zeilen, _Spalten);
 
             versuche++;
 
